@@ -1,4 +1,4 @@
-const API_BASE = "http://127.0.0.1:8000/api";
+const API_BASE = "http://127.0.0.1:8001/api";
 
 async function request(path, options = {}) {
   const response = await fetch(`${API_BASE}${path}`, {
@@ -28,7 +28,7 @@ async function request(path, options = {}) {
 }
 
 export const api = {
-  health: () => fetch("http://127.0.0.1:8000/health").then((r) => r.json()),
+  health: () => fetch("http://127.0.0.1:8001/health").then((r) => r.json()),
   getClientes: () => request("/clientes/"),
   createCliente: (payload) =>
     request("/clientes/", { method: "POST", body: JSON.stringify(payload) }),
