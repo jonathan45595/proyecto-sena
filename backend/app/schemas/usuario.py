@@ -32,6 +32,15 @@ class LoginRequest(BaseModel):
     email: EmailStr
     password: str
 
+from pydantic import BaseModel, EmailStr
+
+
+class RegisterRequest(BaseModel):
+    nombre: str
+    apellido: str
+    email: EmailStr
+    telefono: str | None = None
+    password: str
 
 class TokenResponse(BaseModel):
     access_token: str

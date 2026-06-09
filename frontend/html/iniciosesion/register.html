@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link
+        rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/css/intlTelInput.css"
+    />
+    <title>Registro | FlyMetrics</title>
+
+    <style>
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+
+            min-height: 100vh;
+
+            display: flex;
+
+            justify-content: center;
+
+            align-items: center;
+
+            background:
+                radial-gradient(circle at top left,
+                rgba(0,191,255,.15),
+                transparent 30%),
+                #0a0f1a;
+
+            color: white;
+        }
+
+        .login-container {
+
+            width: 420px;
+
+            background: #111827;
+
+            padding: 40px;
+
+            border-radius: 15px;
+
+            border: 1px solid rgba(0,191,255,.2);
+
+            box-shadow: 0 0 30px rgba(0,0,0,.3);
+        }
+
+        .logo {
+
+            text-align: center;
+
+            color: #00bfff;
+
+            font-size: 32px;
+
+            font-weight: bold;
+
+            margin-bottom: 30px;
+        }
+
+        h2 {
+
+            text-align: center;
+
+            margin-bottom: 10px;
+        }
+
+        p {
+
+            text-align: center;
+
+            color: #c7c7c7;
+
+            margin-bottom: 25px;
+        }
+
+        .input-group {
+
+            margin-bottom: 18px;
+        }
+
+        label {
+
+            display: block;
+
+            margin-bottom: 8px;
+        }
+
+        input {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #1f2937;
+
+            color: white;
+        }
+
+        input:focus {
+
+            outline: 2px solid #00bfff;
+        }
+
+        button {
+
+            width: 100%;
+
+            padding: 12px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #00bfff;
+
+            color: black;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            margin-top: 10px;
+        }
+
+        button:hover {
+
+            opacity: .9;
+        }
+
+        .links {
+
+            margin-top: 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+        }
+
+        .links a {
+
+            color: #00bfff;
+
+            text-decoration: none;
+
+            font-size: 14px;
+        }
+
+    </style>
+
+    <div class="login-container">
+
+        <div class="logo">
+            FLYMETRICS
+        </div>
+
+        <h2>Registrarse</h2>
+
+        <p>
+            Crea una nueva cuenta para acceder.
+        </p>
+
+        <form id="registerForm">
+
+            <div class="input-group">
+                <label>Nombre</label>
+                <input
+                    type="text"
+                    id="nombre"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Apellido</label>
+                <input
+                    type="text"
+                    id="apellido"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Correo Electrónico</label>
+                <input
+                    type="email"
+                    id="email"
+                    required
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Teléfono</label>
+                <input
+                    type="text"
+                    id="telefono"
+                >
+            </div>
+
+            <div class="input-group">
+                <label>Contraseña</label>
+                <input
+                    type="password"
+                    id="password"
+                    required
+                >
+            </div>
+
+            <button type="submit">
+                Registrarse
+            </button>
+
+        </form>
+
+        <div class="links">
+            <a href="forgot-password.html">
+                ¿Olvidaste tu contraseña?
+            </a>
+
+            <div
+                id="g_id_onload"
+                data-client_id="760692608230-pdv2p0s47nptr1adsmosjgdjafmgb648.apps.googleusercontent.com"
+                data-callback="handleCredentialResponse">
+            </div>
+
+            <div
+                class="g_id_signin"
+                data-type="standard"
+                data-size="large"
+                data-theme="filled_black"
+                data-text="signup_with"
+                data-shape="rectangular">
+            </div>
+
+        </div>
+
+    </div>
+</head>
+<body>
+    <script src="https://cdn.jsdelivr.net/npm/intl-tel-input@25.3.0/build/js/intlTelInput.min.js"></script>
+    <script>
+
+    async function handleCredentialResponse(response) {
+
+        console.log(
+            "Google Token:",
+            response.credential
+        );
+
+    }
+
+    const telefonoInput =
+        document.querySelector("#telefono");
+
+    const iti =
+        window.intlTelInput(
+            telefonoInput,
+            {
+                initialCountry: "co",
+                preferredCountries: [
+                    "co",
+                    "us",
+                    "es",
+                    "mx"
+                ]
+            }
+        );
+
+        const form =
+    document.getElementById(
+        "registerForm"
+    );
+
+form.addEventListener(
+    "submit",
+    async (e) => {
+
+        e.preventDefault();
+
+        const nombre =
+            document.getElementById(
+                "nombre"
+            ).value;
+
+        const apellido =
+            document.getElementById(
+                "apellido"
+            ).value;
+
+        const email =
+            document.getElementById(
+                "email"
+            ).value;
+        
+        const telefono =
+            iti.getNumber();
+
+        const password =
+            document.getElementById(
+                "password"
+            ).value;
+
+        try {
+
+            if (!iti.isValidNumber()) {
+
+                alert(
+                    "Número de teléfono inválido, revisa si tu numero es acorde al formato del pais seleccionado"
+                );
+
+                return;
+            }
+            
+                
+            if (password.length < 6) {
+                    alert("La contraseña debe tener al menos 6 caracteres");
+                    return;
+                }
+
+            const response =
+
+                await fetch(
+                    "http://localhost:8000/register",
+                    {
+                        method: "POST",
+                        headers: {
+                            "Content-Type":
+                                "application/json"
+                        },
+                        body: JSON.stringify({
+                            nombre,
+                            apellido,
+                            email,
+                            telefono,
+                            password
+                        })
+                    }
+                );
+
+            const data =
+                await response.json();
+
+            if (response.ok) {
+
+                alert(
+                    "Registro exitoso"
+                );
+
+                window.location.href =
+                    "login.html";
+
+            } else {
+
+                alert(
+                    data.detail
+                );
+            }
+
+        } catch {
+
+            alert(
+                "Error conectando con el servidor"
+            );
+        }
+
+    }
+);
+
+    </script>
+
+</body>
+</html>
+
+
